@@ -32,6 +32,8 @@ public class Recipe implements Parcelable {
         name = in.readString();
         servings = in.readInt();
         image = in.readString();
+        ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+        steps = in.createTypedArrayList(Step.CREATOR);
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -103,5 +105,7 @@ public class Recipe implements Parcelable {
         dest.writeString(name);
         dest.writeInt(servings);
         dest.writeString(image);
+        dest.writeTypedList(ingredients);
+        dest.writeTypedList(steps);
     }
 }

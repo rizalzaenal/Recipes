@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#F3F3F3"
+    android:layout_marginBottom="6dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardCornerRadius="4dp"
+    >
+
+    <TextView
+      android:id="@+id/step_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      style="@style/TextAppearance.MaterialComponents.Body1"
+      tools:text="Put the good stuff"
+      android:padding="16dp"/>
+
+  </androidx.cardview.widget.CardView>
+
+</layout>

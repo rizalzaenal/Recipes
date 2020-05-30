@@ -1,9 +1,11 @@
 package com.rizalzaenal.recipes.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step implements Parcelable {
 
   @SerializedName("id")
   @Expose
@@ -21,7 +23,27 @@ public class Step {
   @Expose
   private String thumbnailURL;
 
-  public int getId() {
+    protected Step(Parcel in) {
+        id = in.readInt();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoURL = in.readString();
+        thumbnailURL = in.readString();
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
+
+    public int getId() {
     return id;
   }
 
@@ -61,4 +83,15 @@ public class Step {
     this.thumbnailURL = thumbnailURL;
   }
 
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(shortDescription);
+        dest.writeString(description);
+        dest.writeString(videoURL);
+        dest.writeString(thumbnailURL);
+    }
 }

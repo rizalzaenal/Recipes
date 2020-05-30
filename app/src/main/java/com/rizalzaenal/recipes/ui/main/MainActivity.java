@@ -1,5 +1,6 @@
 package com.rizalzaenal.recipes.ui.main;
 
+import android.content.Intent;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.rizalzaenal.recipes.R;
 import com.rizalzaenal.recipes.data.network.RetrofitClient;
 import com.rizalzaenal.recipes.databinding.ActivityMainBinding;
+import com.rizalzaenal.recipes.ui.recipedetail.RecipeDetailActivity;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         adapter = new RecipeAdapter(recipe -> {
-            Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RecipeDetailActivity.class);
+            intent.putExtra(RecipeDetailActivity.EXTRA_RECIPE, recipe);
+            startActivity(intent);
         });
 
         viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getRecipes();
         setupObservers();
 
-        if (getResources().getBoolean(R.bool.isTablet)){
+        if (getResources().getBoolean(R.bool.is_sw600)){
             binding.rvMain.setLayoutManager(new GridLayoutManager(this, 3));
         }else {
             binding.rvMain.setLayoutManager(new LinearLayoutManager(this));
