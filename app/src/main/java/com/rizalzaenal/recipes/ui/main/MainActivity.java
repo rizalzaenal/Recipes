@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.rizalzaenal.recipes.R;
 import com.rizalzaenal.recipes.data.network.RetrofitClient;
@@ -16,11 +17,15 @@ import io.reactivex.disposables.CompositeDisposable;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     MainViewModel viewModel;
+    RecipeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        adapter = new RecipeAdapter(recipe -> {
+            Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
+        });
 
         viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
@@ -34,14 +39,18 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getRecipes();
         setupObservers();
 
-        binding.rvMain.setLayoutManager(new LinearLayoutManager(this));
-
+        if (getResources().getBoolean(R.bool.isTablet)){
+            binding.rvMain.setLayoutManager(new GridLayoutManager(this, 3));
+        }else {
+            binding.rvMain.setLayoutManager(new LinearLayoutManager(this));
+        }
+        binding.rvMain.setAdapter(adapter);
 
     }
 
     private void setupObservers(){
         viewModel.recipes.observe(this, recipes -> {
-            Toast.makeText(this, recipes.toString(), Toast.LENGTH_LONG).show();
+            adapter.setRecipes(recipes);
         });
 
         viewModel.error.observe(this, s -> {
