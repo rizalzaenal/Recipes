@@ -65,9 +65,10 @@ public class RecipeDetailFragment extends Fragment {
 
     private void setupRecyclerView(){
         adapter = new StepAdapter(step -> {
-            Toast.makeText(getContext(), step.getShortDescription(), Toast.LENGTH_SHORT).show();
-
+            //Toast.makeText(getContext(), step.getShortDescription(), Toast.LENGTH_SHORT).show();
+            viewModel.onClickStep(step);
         });
+
         adapter.setSteps(viewModel.getRecipe().getSteps());
         binding.rvSteps.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvSteps.setAdapter(adapter);
