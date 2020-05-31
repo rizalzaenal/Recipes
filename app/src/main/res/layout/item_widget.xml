@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#BA68C8"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <TextView
+    android:id="@+id/tv_widget_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="8dp"
+    android:background="#BA68C8"
+    android:textColor="#ffffff"
+    android:textSize="24sp"
+    android:textStyle="bold|italic"
+    tools:text="Pizza" />
+
+  <TextView
+    android:id="@+id/tv_widget_ingredients"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="#BA68C8"
+    android:textColor="#ffffff"
+    android:textSize="12sp"
+    tools:text="1. 5 ONS Baking soda\n2. 2 cup Milk\n3. 1 Glass water
+\n1. 5 ONS Baking soda\n2. 2 cup Milk\n3. 1 Glass water\n1. 5 ONS Baking soda\n2. 2 cup Milk\n3. 1 Glass water\n
+1. 5 ONS Baking soda\n2. 2 cup Milk\n3. 1 Glass water" />
+
+</LinearLayout>

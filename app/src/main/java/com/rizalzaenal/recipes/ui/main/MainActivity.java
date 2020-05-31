@@ -3,6 +3,7 @@ package com.rizalzaenal.recipes.ui.main;
 import android.content.Intent;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
@@ -10,11 +11,12 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.test.espresso.IdlingResource;
 import com.rizalzaenal.recipes.R;
 import com.rizalzaenal.recipes.data.network.RetrofitClient;
 import com.rizalzaenal.recipes.databinding.ActivityMainBinding;
 import com.rizalzaenal.recipes.ui.recipedetail.RecipeDetailActivity;
-import io.reactivex.disposables.CompositeDisposable;
+import com.rizalzaenal.recipes.utils.BasicIdlingResource;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BasicIdlingResource.setIdleResourceTo(false);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         adapter = new RecipeAdapter(recipe -> {
             //Toast.makeText(this, recipe.getName(), Toast.LENGTH_SHORT).show();
@@ -35,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 MainViewModel viewModel =
-                  new MainViewModel(RetrofitClient.getInstance().getRecipeClient(),
-                    new CompositeDisposable());
+                  new MainViewModel(RetrofitClient.getInstance().getRecipeClient());
                 return (T) viewModel;
             }
         }).get(MainViewModel.class);

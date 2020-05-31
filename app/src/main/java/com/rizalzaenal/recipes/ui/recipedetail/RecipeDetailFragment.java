@@ -1,7 +1,6 @@
 package com.rizalzaenal.recipes.ui.recipedetail;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,7 +14,6 @@ import com.rizalzaenal.recipes.R;
 import com.rizalzaenal.recipes.data.model.Ingredient;
 import com.rizalzaenal.recipes.data.network.RetrofitClient;
 import com.rizalzaenal.recipes.databinding.FragmentRecipeDetailBinding;
-import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 
 public class RecipeDetailFragment extends Fragment {
@@ -44,6 +42,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,8 +52,7 @@ public class RecipeDetailFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity(), new ViewModelProvider.Factory() {
             @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 RecipeDetailViewModel viewModel =
-                  new RecipeDetailViewModel(RetrofitClient.getInstance().getRecipeClient(),
-                    new CompositeDisposable());
+                  new RecipeDetailViewModel(RetrofitClient.getInstance().getRecipeClient());
                 return (T) viewModel;
             }
         }).get(RecipeDetailViewModel.class);
@@ -75,8 +73,13 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void setupIngredientText() {
+        binding.ingredients.setText(getFormatedIngredientList());
+    }
+
+    private String getFormatedIngredientList(){
         StringBuilder builder = new StringBuilder();
         List<Ingredient> ingredients = viewModel.getRecipe().getIngredients();
+
         for (int i = 0; i < ingredients.size(); i++) {
 
             int stepNumber = i + 1;
@@ -85,7 +88,8 @@ public class RecipeDetailFragment extends Fragment {
               stepNumber + ". " + current.getQuantity() + " " + current.getMeasure() + " " + current
                 .getIngredient() + "\n");
         }
-        binding.ingredients.setText(builder.toString());
+
+        return builder.toString();
     }
 
     @Override

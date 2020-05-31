@@ -6,19 +6,18 @@ import androidx.lifecycle.ViewModel;
 import com.rizalzaenal.recipes.data.model.Recipe;
 import com.rizalzaenal.recipes.data.model.Step;
 import com.rizalzaenal.recipes.data.network.RecipeClient;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class RecipeDetailViewModel extends ViewModel {
     private RecipeClient recipeClient;
-    private CompositeDisposable compositeDisposable;
+    //private CompositeDisposable compositeDisposable;
     private Recipe recipe;
     private MutableLiveData<Step> _openStep = new MutableLiveData<>();
     public LiveData<Step> openStep = _openStep;
     public MutableLiveData<Step> currentStep = new MutableLiveData<>();
 
-    public RecipeDetailViewModel(RecipeClient recipeClient, CompositeDisposable compositeDisposable){
+    public RecipeDetailViewModel(RecipeClient recipeClient){
         this.recipeClient = recipeClient;
-        this.compositeDisposable = compositeDisposable;
+       // this.compositeDisposable = compositeDisposable;
     }
 
     public void setRecipe(Recipe recipe) {
@@ -38,7 +37,7 @@ public class RecipeDetailViewModel extends ViewModel {
     }
 
     @Override protected void onCleared() {
-        compositeDisposable.dispose();
+       // compositeDisposable.dispose();
         super.onCleared();
     }
 }
